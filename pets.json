@@ -1,1 +1,33 @@
-[]
+[
+  [
+    { "name": "Apophis", "kind": "shrimp", "alive": false },
+    { "name": "Higgs Boson", "kind": "tortoise", "alive": true }
+  ],
+  [
+    { "name": "Opal", "kind": "cat", "alive": true },
+    { "name": "Jeffry", "kind": "cat", "alive": false }
+  ],
+  [{ "name": "Karl", "kind": "llama", "alive": true }],
+  [{ "name": "Polly", "kind": "cat", "alive": true }],
+  [{ "name": "Shnitzel", "kind": "cat", "alive": true }],
+  [
+    { "name": "Holly", "kind": "hamster", "alive": false },
+    { "name": "James Pond", "kind": "goldfish", "alive": false }
+  ],
+  [
+    { "name": "Otis", "kind": "dog", "alive": false },
+    { "name": "Branston", "kind": "dog", "alive": true }
+  ],
+  [
+    { "name": "Dave", "kind": "cat", "alive": false },
+    { "name": "Pinchy", "kind": "lobster", "alive": false }
+  ],
+  [
+    { "name": "Rodriguez", "kind": "llama", "alive": true },
+    { "name": "Jean-Luc Picard", "kind": "octopus", "alive": true }
+  ],
+  [
+    { "name": "Barney", "kind": "dog", "alive": true },
+    { "name": "Shania", "kind": "rock", "alive": false }
+  ]
+]

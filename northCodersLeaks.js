@@ -62,10 +62,10 @@ const getInterests = () => {
     let count = 0;
     let interestsArray = [];
 
-    userNames.forEach((username, index) => {
+    userNames.forEach((username) => {
       const interestOptions = {
         hostname: "nc-leaks.herokuapp.com",
-        path: `/api/people/${username[index]}/interests`,
+        path: `/api/people/${username}/interests`,
         method: "GET",
       };
 
@@ -125,10 +125,10 @@ const getPets = () => {
     let count = 0;
     let petsArray = [];
 
-    userNames.forEach((username, index) => {
+    userNames.forEach((username) => {
       const petOptions = {
         hostname: "nc-leaks.herokuapp.com",
-        path: `/api/people/${username[index]}/pets`,
+        path: `/api/people/${username}/pets`,
         method: "GET",
       };
 
