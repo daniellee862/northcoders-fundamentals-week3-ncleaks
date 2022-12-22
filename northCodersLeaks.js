@@ -1,29 +1,14 @@
 const https = require("https");
 const fs = require("fs");
 
-/* const options = {
-  hostname: "nc-leaks.herokuapp.com",
-  path: "/api/confidential",
-  method: "GET",
-};
-
-const req = https.request(options, (res) => {
-  let body = "";
-  console.log(res);
-});
-
-req.on("error", (e) => {
-  console.error(e);
-});
-
-req.end(); */
-
+//OPTIONS FOR PEOPLE REQUEST
 const peopleOptions = {
   hostname: "nc-leaks.herokuapp.com",
   path: "/api/people",
   method: "GET",
 };
 
+//PEOPLE REQUEST
 const getPeople = https.request(peopleOptions, (res) => {
   let body = "";
 
@@ -35,22 +20,20 @@ const getPeople = https.request(peopleOptions, (res) => {
     const parsedPeople = JSON.parse(body);
     let northcodersEmployees = [];
 
-    // let northcodersEmployees = [];
-
-    parsedPeople.people.map((name) => {
-      if (name.job.workplace === "northcoders") {
-        northcodersEmployees.push(name);
-      }
+    parsedPeople.people.forEach((name) => {
+      if (name.job.workplace === "northcoders") northcodersEmployees.push(name);
     });
 
-    const employeeString = JSON.stringify(northcodersEmployees);
-
-    fs.writeFile("northcoders.json", employeeString, (err) => {
-      if (err) console.log(err);
-      else {
-        console.log("File written successfully\n");
+    fs.writeFile(
+      "northcoders.json",
+      JSON.stringify(northcodersEmployees),
+      (err) => {
+        if (err) console.log(err);
+        else {
+          console.log("File written successfully\n");
+        }
       }
-    });
+    );
   });
 });
 
@@ -60,6 +43,9 @@ getPeople.on("error", (e) => {
 
 getPeople.end();
 
+//GET INTERESTS FUNCTION;
+//readfilesystem - get usernames - iterate over usernames
+//multiple requests for interests - save to new file.
 const getInterests = () => {
   fs.readFile("northcoders.json", "utf8", (err, data) => {
     const parsedData = JSON.parse(data);
@@ -75,10 +61,11 @@ const getInterests = () => {
 
     let count = 0;
     let interestsArray = [];
-    for (let i = 0; i < userNames.length; i++) {
+
+    userNames.forEach((username, index) => {
       const interestOptions = {
         hostname: "nc-leaks.herokuapp.com",
-        path: `/api/people/${userNames[i]}/interests`,
+        path: `/api/people/${username[index]}/interests`,
         method: "GET",
       };
 
@@ -91,7 +78,6 @@ const getInterests = () => {
 
         resObject.on("end", () => {
           const parsedInterests = JSON.parse(body);
-          //   let northcodersInterests = [];
           interestsArray.push(parsedInterests.person);
           count++;
           if (count === userNames.length) {
@@ -114,15 +100,14 @@ const getInterests = () => {
       });
 
       getInterests.end();
-    }
+    });
   });
 };
 
+//CALL THE GET INTERESTS FUNCITON
 getInterests();
 
-//NEXT QUESTION; 3
-
-/* \n\nWrite a function called `getPets` that does the same as the Task 2 but for pets. The endpoint is `https://nc-leaks.herokuapp.com/api/people/:username/pets`;\n\n> Note: Some of the users do not have pets and so the server will respond with a person but an empty pets array! These responses should not be included in the `pets.json`.\n\n### T */
+//Get Pets Function, Same as Get Interests
 
 const getPets = () => {
   fs.readFile("northcoders.json", "utf8", (err, data) => {
@@ -140,10 +125,10 @@ const getPets = () => {
     let count = 0;
     let petsArray = [];
 
-    for (let i = 0; i < userNames.length; i++) {
+    userNames.forEach((username, index) => {
       const petOptions = {
         hostname: "nc-leaks.herokuapp.com",
-        path: `/api/people/${userNames[i]}/pets`,
+        path: `/api/people/${username[index]}/pets`,
         method: "GET",
       };
 
@@ -156,13 +141,11 @@ const getPets = () => {
 
         resObject.on("end", () => {
           const parsedPets = JSON.parse(body);
-          //   let northcodersInterests = [];
-          if (!parsedPets.status) {
-            petsArray.push(parsedPets.person.pets);
-          }
+
+          if (!parsedPets.status) petsArray.push(parsedPets.person.pets);
+
           count++;
           if (count === userNames.length) {
-            console.log(petsArray);
             fs.writeFile("pets.json", JSON.stringify(petsArray), (err) => {
               if (err) console.log(err);
               else {
@@ -178,7 +161,7 @@ const getPets = () => {
       });
 
       getPets.end();
-    }
+    });
   });
 };
 
